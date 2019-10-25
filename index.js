@@ -2,6 +2,9 @@ const express = require('express')
 const bodyParser = require('body-parser')
 
 const streamRouter = require('./stream/router')
+const userRouter = require('./user/router')
+const auth = require('./server/auth/router')
+const cors = require('cors')
 
 const app = express()
 const port = process.env.PORT || 5000
@@ -9,6 +12,7 @@ const port = process.env.PORT || 5000
 const jsonParser = bodyParser.json()
 
 
+app.use(cors())
 app.use(jsonParser)
 app.listen(port, () => console.log("Server running on port ", port))
 
@@ -19,3 +23,5 @@ app.get('/', (request, response) => {
 })
 
 app.use(streamRouter)
+app.use(auth)
+app.use(userRouter)
